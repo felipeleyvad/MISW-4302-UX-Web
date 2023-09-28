@@ -20,7 +20,9 @@ function App() {
   };
 
   const tabStyle = {
-    indicatorColor: '#12355B', // Reemplaza esto con tu código hexadecimal deseado
+    color: '#12355B',         // Color del texto del tab
+    backgroundColor: '#FFFFFF',  // Color de fondo del tab
+    indicatorColor: '#12355B',   // Color del acento del tab (color de la línea inferior)
   };
 
   const handleChange = (event, newValue) => {
@@ -34,6 +36,11 @@ function App() {
     setTabValue(0); // Cambiar a la pestaña de "Alarmas" después de crear la alarma
   };
 
+  const handleDeleteAlarm = (deletedAlarm) => {
+    const updatedAlarms = predefinedAlarms.filter((alarm) => alarm !== deletedAlarm);
+    setPredefinedAlarms(updatedAlarms);
+  };
+
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <div className="App">
@@ -42,9 +49,9 @@ function App() {
           <Button
             variant="contained"
             style={appButtonStyle}
-            onClick={() => setIsCreateAlarmFormOpen(true)}
+            onClick={() => isCreateAlarmFormOpen ? setIsCreateAlarmFormOpen(false) : setIsCreateAlarmFormOpen(true)}
           >
-            Crear Alarma
+            {isCreateAlarmFormOpen ? "Volver" : "Crear Alarma"}
           </Button>
           {isCreateAlarmFormOpen ? (
             <div>
@@ -59,7 +66,8 @@ function App() {
               </Tabs>
               {tabValue === 0 && (
                 <div>
-                  <AlarmList alarms={predefinedAlarms} />
+                  <AlarmList alarms={predefinedAlarms} onDelete={handleDeleteAlarm} />
+
                 </div>
               )}
               {tabValue === 1 && (

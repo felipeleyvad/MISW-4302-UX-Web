@@ -36,6 +36,7 @@ const CreateAlarmForm = ({ onCreate }) => {
         variant="outlined"
         value={newAlarm}
         onChange={(e) => setNewAlarm(e.target.value)}
+        autoFocus
       />
       <br />
       <br />
